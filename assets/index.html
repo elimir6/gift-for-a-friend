@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ты меня любишь? ❤️ | Романтическая открытка</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fullscreen Camera Flash Overlay -->
+  <div id="camera-flash" class="camera-flash"></div>
+
+  <!-- Floating Hearts & Stars Canvas Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="container">
+    
+    <!-- ЭКРАН 1: ТЫ МЕНЯ ЛЮБИШЬ? -->
+    <div id="screen1" class="postcard">
+      <h1 id="question-title" class="title-main">Ты меня любишь? ❤️</h1>
+      <p id="question-subtitle" class="subtitle-text">Выбирай ответ очень внимательно! 🥺</p>
+
+      <div class="cat-wrapper">
+        <img id="cat-main" class="cat-img" src="assets/cat_asking.png" alt="Милый котик">
+      </div>
+
+      <div id="buttons-wrapper" class="buttons-container">
+        <button id="btn-yes" class="btn btn-yes" onclick="handleYesClick()">ДА 💕</button>
+        <button id="btn-no" class="btn btn-no" onclick="handleNoClick()">НЕТ 💔</button>
+      </div>
+    </div>
+
+    <!-- ЭКРАН 2: ИНТЕРАКТИВНАЯ СЦЕНА С КОТИКОМ С ФОТОАППАРАТОМ И ФОТО ХОМЯЧКА -->
+    <div id="scene2" class="postcard">
+      <div class="cat-camera-container">
+        <div id="speech-bubble" class="speech-bubble">Улыбнись! 📸</div>
+        
+        <!-- Милый котик с фотоаппаратом -->
+        <div class="cat-camera-img-wrapper">
+          <img src="assets/page2_kitten_camera.png" alt="Пушистый белый котик с розовым фотоаппаратом" class="cat-camera-img">
+        </div>
+      </div>
+
+      <div id="countdown-text" class="countdown-text"></div>
+
+      <!-- РОВНО 1 ФОТОГРАФИЯ С МИЛЫМ СМЕШНЫМ ХОМЯЧКОМ ПОСЛЕ ВСПЫШКИ -->
+      <div id="single-photo-stage" class="single-photo-stage">
+        <div class="polaroid-card single-polaroid">
+          <div class="hamster-photo-wrapper">
+            <img src="assets/page2_hamster_heart.png" alt="Милый хомячок с розовым сердечком" class="hamster-photo-img">
+          </div>
+          <div class="polaroid-caption">it's always you :) 💕</div>
+        </div>
+
+        <button id="btn-open-gifts" class="btn btn-open-gifts" onclick="goToGifts()">Открыть подарки 🎁</button>
+      </div>
+    </div>
+
+    <!-- ЭКРАН 3: 4 ПОДАРКА -->
+    <div id="scene3" class="postcard">
+      <div class="screen3-header">
+        <h1 class="screen3-title">Я знала, что ты скажешь ДА 💕</h1>
+        <p class="screen3-subtitle">Я приготовила для тебя 4 особенных подарка! Открой каждый 🎁</p>
+      </div>
+
+      <div class="gifts-grid">
+        <!-- ПОДАРОК 1 -->
+        <div class="gift-card" onclick="openModal('modal-gallery')">
+          <div class="gift-box-icon">🎁</div>
+          <div class="gift-title">Галерея воспоминаний</div>
+          <span class="gift-tag">ПОДАРОК 1 • Фотографии</span>
+        </div>
+
+        <!-- ПОДАРОК 2 -->
+        <div class="gift-card" onclick="openModal('modal-music')">
+          <div class="gift-box-icon">🎵</div>
+          <div class="gift-title">Spotify Плейлист</div>
+          <span class="gift-tag">ПОДАРОК 2 • Музыка</span>
+        </div>
+
+        <!-- ПОДАРОК 3 -->
+        <div class="gift-card" onclick="openModal('modal-letter')">
+          <div class="gift-box-icon">💌</div>
+          <div class="gift-title">Любовное письмо</div>
+          <span class="gift-tag">ПОДАРОК 3 • Письмо</span>
+        </div>
+
+        <!-- ПОДАРОК 4 -->
+        <div class="gift-card" onclick="openModal('modal-quest')">
+          <div class="gift-box-icon">🗺️</div>
+          <div class="gift-title">Подсказка к подарку</div>
+          <span class="gift-tag">ПОДАРОК 4 • Квест</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО: ПОДАРОК 1 (ГАЛЕРЕЯ ВОСПОМИНАНИЙ) -->
+  <div id="modal-gallery" class="modal-overlay">
+    <div class="modal-content">
+      <button class="btn-back" onclick="closeModal('modal-gallery')">← Назад к подаркам</button>
+      <h2 style="color: var(--pink-dark); margin-bottom: 5px;">📸 Галерея воспоминаний</h2>
+      <p style="color: #777; margin-bottom: 20px; font-size: 0.95rem;">Каждый миг с тобой — бесценен! ✨</p>
+      
+      <div class="gallery-grid">
+        
+        <!-- КАРТОЧКА 1: Пушистый котик Регдолл -->
+        <div class="polaroid-card" style="--r: -3;">
+          <div class="animal-art-wrapper">
+            <img src="assets/gallery_ragdoll_kitten.png" alt="Пушистый котик Регдолл" class="polaroid-img">
+          </div>
+          <div class="polaroid-caption">Это ты🥺</div>
+        </div>
+
+        <!-- КАРТОЧКА 2: Щенок золотистого ретривера с розовым бантиком -->
+        <div class="polaroid-card" style="--r: 2;">
+          <div class="animal-art-wrapper">
+            <img src="assets/gallery_golden_retriever.png" alt="Щенок золотистого ретривера с розовым бантиком" class="polaroid-img">
+          </div>
+          <div class="polaroid-caption">Это я, когда вижу тебя и не могу перестать улыбаться ✨</div>
+        </div>
+
+        <!-- КАРТОЧКА 3: Упитанный подмигивающий хомячок -->
+        <div class="polaroid-card" style="--r: -2;">
+          <div class="animal-art-wrapper">
+            <img src="assets/gallery_chubby_hamster.png" alt="Подмигивающий хомячок" class="polaroid-img">
+          </div>
+          <div class="polaroid-caption">Это ты подмигиваешь мне 💖</div>
+        </div>
+
+        <!-- КАРТОЧКА 4: Маленький милый кролик с цветком -->
+        <div class="polaroid-card" style="--r: 4;">
+          <div class="animal-art-wrapper">
+            <img src="assets/gallery_tiny_rabbit.png" alt="Милый кролик с цветком" class="polaroid-img">
+          </div>
+          <div class="polaroid-caption">Это ты, когда ждёшь свои подарки 🎁</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО: ПОДАРОК 2 (ТОЛЬКО SPOTIFY ВСТРОЕННЫЙ ПЛЕЕР) -->
+  <div id="modal-music" class="modal-overlay">
+    <div class="modal-content" style="max-width: 550px;">
+      <button class="btn-back" onclick="closeModal('modal-music')">← Назад к подаркам</button>
+      <h2 style="color: var(--pink-dark); margin-bottom: 5px;">🎵 Spotify Плейлист</h2>
+      <p style="color: #777; margin-bottom: 20px; font-size: 0.95rem;">Наши любимые треки в одном месте 💕</p>
+
+      <div class="spotify-only-wrapper">
+        <iframe style="border-radius:20px; width:100%; height:380px; border:0; box-shadow: 0 10px 25px rgba(0,0,0,0.1);" src="https://open.spotify.com/embed/playlist/6VfHocgxjn356iR4bmdMxI?utm_source=generator&theme=0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО: ПОДАРОК 3 (ЛЮБОВНОЕ ПИСЬМО) -->
+  <div id="modal-letter" class="modal-overlay">
+    <div class="modal-content">
+      <button class="btn-back" onclick="closeModal('modal-letter')">← Назад к подаркам</button>
+
+      <div class="letter-container">
+        <div class="letter-header">Моя любимая, с днём рождения! 🎂🎉</div>
+        <div class="letter-body">Ты делаешь каждый день лучше, ярче и теплее. Ты невероятно красивая, прекрасная, вдохновляющая и искренняя. Ты из тех редких людей, рядом с которыми становится светло на душе, а твоя улыбка способна разогнать любые тучи.
+
+От всего сердца желаю тебе:
+
+💰 Финансового изобилия, чтобы твои мечты с лёгкостью превращались в реальность, а деньги приходили легко и в удовольствие.
+🚀 Стремительного роста в любимом деле. Пусть всё, за что ты берёшься, идёт только в гору, приносит вдохновение, признание и крутые результаты.
+❤️ Взаимной, искренней и крепкой любви. Желаю тебе здоровых, гармоничных и надёжных отношений, где тебя ценят, берегут и носят на руках.
+✨ Много поводов для радости. Никогда не расстраивайся по пустякам, помни о своей невероятной силе и улыбайся как можно чаще — тебе это так идет!
+
+Что бы ни происходило, ты всегда можешь на меня положиться. Я рядом, я за тебя и всегда поддержу в любых начинаниях и ситуациях.
+
+Очень тебя люблю! С днём рождения! ❤️✨</div>
+        <div class="letter-wax-seal">💌</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО: ПОДАРОК 4 (ИНТЕРАКТИВНЫЙ КВЕСТ) -->
+  <div id="modal-quest" class="modal-overlay">
+    <div class="modal-content">
+      <button class="btn-back" onclick="closeModal('modal-quest')">← Назад к подаркам</button>
+
+      <div class="quest-card">
+        <!-- Экран активного вопроса квеста -->
+        <div id="quest-active-screen" class="quest-screen">
+          <div id="quest-counter" class="quest-counter">Вопрос 1 из 7</div>
+          <h2 id="quest-riddle" class="quest-riddle-text">Загадка загружается...</h2>
+
+          <div id="quest-options" class="quest-options-container">
+            <!-- Кнопки вариантов ответов генерируются JS -->
+          </div>
+
+          <div class="quest-next-wrapper">
+            <button id="btn-next-question" class="btn btn-next-question" style="display: none;" onclick="nextQuestion()">Далее ✨</button>
+          </div>
+        </div>
+
+        <!-- Финальный экран после 7-го вопроса -->
+        <div id="quest-final-screen" class="quest-final-screen" style="display: none;">
+          <div class="quest-final-icon">🎉💖</div>
+          <h2 class="quest-final-title">Квест пройден!</h2>
+          <p class="quest-final-text">Ура! 🎉 Поздравляю, ты успешно прошла весь квест! Это все твои подарки, надеюсь скоро увидимся! 💖</p>
+          <button class="btn btn-open-gifts" onclick="closeModal('modal-quest')" style="margin-top: 20px;">Вернуться к подаркам 🎁</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
